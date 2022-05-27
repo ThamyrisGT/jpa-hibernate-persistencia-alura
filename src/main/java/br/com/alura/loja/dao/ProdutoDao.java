@@ -38,9 +38,9 @@ public class ProdutoDao {
 	}
 	
 	public List<Produto> buscarPorNome(String nome) {
-		String jpql = "SELECT p FROM Produto p WHERE p.nome = :nome";
+		String jpql = "SELECT p FROM Produto p WHERE p.nome = :nome"; //além do "named param", tbm pode utilizar o parametro posicional (por posicao) - ?1 ?2 ?3 ... 
 		return em.createQuery(jpql, Produto.class)
-				.setParameter("nome", nome)
+				.setParameter("nome", nome)  // e aqui em vez de nome seria 1
 				.getResultList();
 	}
 	
