@@ -8,6 +8,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,10 +27,14 @@ public class Pedido {
 	private BigDecimal valorTotal = BigDecimal.ZERO;
 	private LocalDate data = LocalDate.now();
 
-	@ManyToOne
+	// por padrão é eager todos que terminam em ToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Cliente cliente;
-	
-	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)   // se fosse relação muitos para muitos simples, seria só a anotação @ManyToMany e @JoinTable(name="para alterar o nome da tabela") em uma lista de Produto
+
+	// por padrão é lazy todos que terminam em ToMany
+	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL) // se fosse relação muitos para muitos simples, seria só
+																// a anotação @ManyToMany e @JoinTable(name="para
+																// alterar o nome da tabela") em uma lista de Produto
 	private List<ItemPedido> itens = new ArrayList<>();
 
 	public Pedido() {
@@ -38,7 +43,7 @@ public class Pedido {
 	public Pedido(Cliente cliente) {
 		this.cliente = cliente;
 	}
-	
+
 	public void adicionarItem(ItemPedido item) {
 		item.setPedido(this);
 		this.itens.add(item);
@@ -75,6 +80,14 @@ public class Pedido {
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+
+	public List<ItemPedido> getItens() {
+		return itens;
+	}
+
+	public void setItens(List<ItemPedido> itens) {
+		this.itens = itens;
 	}
 
 }
