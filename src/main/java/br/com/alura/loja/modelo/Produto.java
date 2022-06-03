@@ -16,7 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "produtos")
-@NamedQuery(name = "Produto.produtosPorCategoria",query = "SELECT p FROM Produto p WHERE p.categoria.nome = :nome")
+@NamedQuery(name = "Produto.produtosPorCategoria",query = "SELECT p FROM Produto p WHERE p.categoria.id.nome = :nome")
 @Inheritance(strategy = InheritanceType.JOINED) // cria tabelas separadas de cada classe filha
 //@Inheritance(strategy = InheritanceType.SINGLE_TABLE)  // para deixar tudo na mesma tabela , todas os atributos da herança
 public class Produto {
